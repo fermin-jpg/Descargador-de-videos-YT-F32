@@ -12,11 +12,9 @@ Descarga videos y audio de YouTube en máxima calidad desde una interfaz moderna
 
 4 - instala las dependecias que te pide (tarda 3 min aprox en total)
 
-5 - si te pide instalar FFmpeg dale a que SI
+5 - Pega la URL de vídeo que quieras.
 
-6 - Pega la URL de vídeo que quieras.
-
-7 - Una vez finalizado, se guarda en la carpeta de descargas.
+6 - Una vez finalizado, se guarda en la carpeta de descargas.
 
 **Tecnologías:** `Python` `FastAPI` `yt-dlp` | **Licencia:** `MIT`
 
