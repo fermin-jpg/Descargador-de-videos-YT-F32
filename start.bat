@@ -10,21 +10,25 @@ cd /d "%~dp0"
 
 :: Requirement Check: Check if Python is installed
 python --version >nul 2>&1
-if %errorlevel% neq 0 (
-    echo [ALERTA] Python no esta instalado o no se encuentra en el PATH.
-    echo Se requiere Python 3.7 o superior para ejecutar Downloader YT Fer32.
-    echo.
-    set /p "install_py=¿Desea abrir la pagina oficial de descargas de Python en su navegador? (S/N): "
-    
-    :: Open URL if user accepts
-    if /i "%install_py%"=="s" start https://www.python.org/downloads/
-    if /i "%install_py%"=="si" start https://www.python.org/downloads/
-    
-    echo.
-    echo Por favor, instala Python y vuelve a ejecutar este archivo.
-    pause
-    exit /b 1
-)
+if %errorlevel% neq 0 goto no_python
+goto python_ok
+
+:no_python
+echo [ALERTA] Python no esta instalado o no se encuentra en el PATH.
+echo Se requiere Python 3.7 o superior para ejecutar Downloader YT Fer32.
+echo.
+set /p "install_py=¿Desea abrir la pagina oficial de descargas de Python en su navegador? (S/N): "
+
+:: Open URL if user accepts
+if /i "%install_py%"=="s" start https://www.python.org/downloads/
+if /i "%install_py%"=="si" start https://www.python.org/downloads/
+
+echo.
+echo Por favor, instala Python y vuelve a ejecutar este archivo.
+pause
+exit /b 1
+
+:python_ok
 
 :: Check if Virtual Environment exists and is working
 if not exist ".venv" goto make_venv
