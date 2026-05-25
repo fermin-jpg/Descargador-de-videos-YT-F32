@@ -4,11 +4,19 @@ Descarga videos y audio de YouTube en máxima calidad desde una interfaz moderna
 
 ## 🪄Instrucciones 
 
-1 - inicia el `Start.bat`.
+1 - Descargar Pyhton : https://www.python.org/downloads/
 
-2 - Pega la URL de vídeo que quieras.
+2 - inicia el `Start.bat`.
 
-3 - Una vez finalizado, se guarda en la carpeta de descargas.
+3 - instala las dependecias que te pide (tarda 3 min aprox en total)
+
+4 - si te pide instalar FFmpeg dale a que SI
+
+5 - te dirá como quieres abrirlo si en el navegador (1) o en forma de APP de windows (2) , desde ajustes (arriba  a la izquierda lo puedes cambiar)
+
+5 - Pega la URL de vídeo que quieras.
+
+6 - Una vez finalizado, se guarda en la carpeta de descargas.
 
 **Tecnologías:** `Python` `FastAPI` `yt-dlp` | **Licencia:** `MIT`
 
