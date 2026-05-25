@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloader YT Fer32 - Descargador de YouTube Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="background-glows">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <!-- Settings Button -->
+    <button id="settings-btn" class="settings-btn" aria-label="Ajustes">
+        <i class="fa-solid fa-gear"></i>
+    </button>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <i class="fa-solid fa-cloud-arrow-down logo-icon"></i>
+                <h1>Downloader YT <span>Fer32</span></h1>
+            </div>
+            <p class="subtitle">Descarga videos y audios de YouTube en calidad Premium - Edición Fer32</p>
+        </header>
+
+        <main>
+            <!-- URL Input -->
+            <section class="card input-card">
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <i class="fa-brands fa-youtube input-icon"></i>
+                        <input type="text" id="url-input"
+                            placeholder="Pega un enlace de YouTube o una lista de reproducción..."
+                            autocomplete="off">
+                        <button id="clear-btn" class="clear-btn" style="display:none;" aria-label="Limpiar">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <button id="fetch-btn" class="primary-btn ripple">
+                        <span>Analizar</span>
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </button>
+                </div>
+                <div id="url-error" class="error-text" style="display:none;">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span id="error-message">Enlace no válido</span>
+                </div>
+            </section>
+
+            <!-- Loading -->
+            <section id="loading-section" class="card loading-card" style="display:none;">
+                <div class="spinner-wrapper">
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
+                </div>
+                <p>Analizando el contenido, buscando formatos disponibles...</p>
+            </section>
+
+            <!-- ── Single Video Info ── -->
+            <section id="info-section" class="card info-card" style="display:none;">
+                <div class="video-details-layout">
+                    <div class="thumbnail-container">
+                        <img id="video-thumbnail" src="" alt="Miniatura">
+                        <span id="video-duration" class="duration-badge">0:00</span>
+                    </div>
+                    <div class="metadata-container">
+                        <h2 id="video-title" class="video-title">Título del Video</h2>
+                        <p id="video-uploader" class="video-uploader">
+                            <i class="fa-solid fa-circle-user"></i> Canal
+                        </p>
+                        <div class="form-group">
+                            <label for="quality-select">
+                                <i class="fa-solid fa-sliders"></i> Selecciona la Calidad:
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="quality-select"></select>
+                                <i class="fa-solid fa-chevron-down select-chevron"></i>
+                            </div>
+                        </div>
+                        <button id="download-btn" class="primary-btn action-btn ripple">
+                            <span>Comenzar Descarga</span>
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── Playlist Panel ── -->
+            <section id="playlist-section" class="card playlist-card" style="display:none;">
+                <!-- Playlist header -->
+                <div class="playlist-header">
+                    <div class="playlist-meta">
+                        <i class="fa-solid fa-list-ul playlist-icon"></i>
+                        <div>
+                            <h2 id="playlist-title" class="playlist-title">Lista de reproducción</h2>
+                            <p id="playlist-uploader" class="playlist-uploader"></p>
+                        </div>
+                    </div>
+                    <span id="playlist-count" class="playlist-count-badge">0 videos</span>
+                </div>
+
+                <!-- Quality selector for all playlist downloads -->
+                <div class="form-group playlist-quality-group">
+                    <label for="playlist-quality-select">
+                        <i class="fa-solid fa-sliders"></i> Calidad para todos los videos:
+                    </label>
+                    <div class="select-wrapper">
+                        <select id="playlist-quality-select"></select>
+                        <i class="fa-solid fa-chevron-down select-chevron"></i>
+                    </div>
+                </div>
+
+                <!-- Select all / none controls -->
+                <div class="playlist-controls">
+                    <button id="select-all-btn" class="ctrl-btn">
+                        <i class="fa-solid fa-check-double"></i> Seleccionar todos
+                    </button>
+                    <button id="select-none-btn" class="ctrl-btn">
+                        <i class="fa-solid fa-xmark"></i> Deseleccionar todos
+                    </button>
+                    <span id="selected-count-label" class="selected-count">0 seleccionados</span>
+                </div>
+
+                <!-- Video list -->
+                <div id="playlist-video-list" class="playlist-video-list">
+                    <!-- dynamic items injected here -->
+                </div>
+
+                <!-- Download selected -->
+                <button id="playlist-download-btn" class="primary-btn playlist-dl-btn ripple" disabled>
+                    <i class="fa-solid fa-download"></i>
+                    <span id="playlist-dl-btn-label">Descargar seleccionados (0)</span>
+                </button>
+            </section>
+
+            <!-- ── Batch Progress Panel ── -->
+            <section id="batch-progress-section" class="card batch-progress-card" style="display:none;">
+                <div class="batch-progress-header">
+                    <h3><i class="fa-solid fa-layer-group"></i> Descargando lista de reproducción</h3>
+                    <span id="batch-overall-label" class="batch-overall-label">0 / 0 completados</span>
+                </div>
+                <!-- Overall bar -->
+                <div class="progress-bar-container" style="margin-bottom:20px;">
+                    <div id="batch-overall-bar" class="progress-bar-fill" style="width:0%;"></div>
+                </div>
+                <!-- Per-item list -->
+                <div id="batch-items-list" class="batch-items-list"></div>
+
+                <div id="batch-done-actions" class="success-actions" style="display:none;">
+                    <p class="success-msg">
+                        <i class="fa-solid fa-circle-check"></i>
+                        ¡Todas las descargas han finalizado!
+                    </p>
+                    <button id="batch-open-folder-btn" class="secondary-btn ripple">
+                        <i class="fa-solid fa-folder-open"></i> Abrir Carpeta de Descargas
+                    </button>
+                </div>
+            </section>
+
+            <!-- ── Single Download Progress ── -->
+            <section id="progress-section" class="card progress-card" style="display:none;">
+                <div class="progress-header">
+                    <div class="progress-title">
+                        <i class="fa-solid fa-spinner fa-spin icon-spinner" id="progress-spinner"></i>
+                        <i class="fa-solid fa-circle-check icon-success" id="progress-success-icon" style="display:none;"></i>
+                        <i class="fa-solid fa-triangle-exclamation icon-failed" id="progress-failed-icon" style="display:none;"></i>
+                        <span id="progress-status-title">Descargando...</span>
+                    </div>
+                    <span id="progress-percentage-text">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="progress-bar-fill" class="progress-bar-fill" style="width:0%;"></div>
+                </div>
+                <div class="progress-stats">
+                    <div class="stat-box">
+                        <span class="stat-label">Velocidad</span>
+                        <span id="stat-speed" class="stat-value">-- MB/s</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Tiempo Restante</span>
+                        <span id="stat-eta" class="stat-value">--:--</span>
+                    </div>
+                </div>
+                <div id="success-action-container" class="success-actions" style="display:none;">
+                    <p class="success-msg"><i class="fa-solid fa-circle-check"></i> ¡Descarga completada!</p>
+                    <p id="success-filename" class="success-filename"></p>
+                    <button id="open-folder-btn-success" class="secondary-btn ripple">
+                        <i class="fa-solid fa-folder-open"></i> Abrir Carpeta
+                    </button>
+                </div>
+                <div id="failed-action-container" class="failed-actions" style="display:none;">
+                    <p class="failed-msg"><i class="fa-solid fa-circle-xmark"></i> Error al descargar:</p>
+                    <p id="failed-error-msg" class="failed-error-msg"></p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <button id="global-open-folder-btn" class="text-btn">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Abrir carpeta de descargas</span>
+            </button>
+            <p class="copyright">&copy; 2026 Downloader YT Fer32. Diseñado para un rendimiento premium.</p>
+        </footer>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal" aria-hidden="true">
+        <div class="modal-content card">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-gear"></i> Ajustes</h3>
+                <button id="close-settings-btn" class="close-btn" aria-label="Cerrar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-item">
+                    <label for="default-mode-select">Método de inicio por defecto:</label>
+                    <div class="select-wrapper">
+                        <select id="default-mode-select">
+                            <option value="ask">Preguntar siempre al iniciar</option>
+                            <option value="browser">Abrir en el Navegador (Opción 1)</option>
+                            <option value="app">Abrir en Ventana de APP (Opción 2)</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down select-chevron"></i>
+                    </div>
+                    <p class="setting-desc">Elige qué modo se usará automáticamente al iniciar start.bat.</p>
+                </div>
+                <div id="settings-status" class="settings-status" style="display:none;">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span id="settings-status-msg">Cambios guardados correctamente</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/main.js"></script>
+</body>
+</html>
