@@ -4,9 +4,9 @@
 
 ### Descargador de videos y audio de YouTube con interfaz web premium
 
-** 1 - inicia el `Start.bat`.
-** 2 - Pega la URL de vídeo que quieras.
-** 3 - Una vez finalizado, se guarda en la carpeta de descargas.
+1 - inicia el `Start.bat`.
+2 - Pega la URL de vídeo que quieras.
+3 - Una vez finalizado, se guarda en la carpeta de descargas.
 
 **Tecnologías:** `Python` `FastAPI` `yt-dlp` | **Licencia:** `MIT`
 
