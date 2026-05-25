@@ -1,7 +1,8 @@
 # ☁️ Downloader YT Fer32
 
-### 🪄Instrucciones 
+Descarga videos y audio de YouTube en máxima calidad desde una interfaz moderna, elegante y fácil de usar. Todo en local, sin servicios de terceros.
 
+### 🪄Instrucciones 
 
 1 - inicia el `Start.bat`.
 
@@ -12,8 +13,6 @@
 **Tecnologías:** `Python` `FastAPI` `yt-dlp` | **Licencia:** `MIT`
 
 ---
-
-Descarga videos y audio de YouTube en máxima calidad desde una interfaz moderna, elegante y fácil de usar. Todo en local, sin servicios de terceros.
 
 ## 🌟 Características
 
