@@ -40,7 +40,7 @@ Descarga videos y audio de YouTube en máxima calidad desde una interfaz moderna
 | Requisito | Versión mínima | Detalles |
 | :--- | :--- | :--- |
 | **Sistema Operativo** | Windows 10+ | El launcher `start.bat` y funciones como abrir carpeta están diseñados para Windows. |
-| **Python** | 3.7 o superior | Debe estar instalado y disponible en el PATH del sistema. |
+| **Python** | 3.7 o superior | Debe estar instalado. |
 | **Conexión a Internet** | — | Necesaria para descargar videos y para la primera instalación de dependencias. |
 
 ### Dependencias de Python (se instalan automáticamente)
