@@ -21,11 +21,6 @@ Descarga videos y audio de YouTube en máxima calidad desde una interfaz moderna
 | **📦 FFmpeg automático** | Descarga e instala FFmpeg y FFprobe automáticamente si no están presentes. |
 | **🎨 Interfaz Premium** | Diseño glassmorphism con tema oscuro, animaciones suaves y tipografía Outfit. |
 
-### 🖼️ Capturas de Pantalla
-> 💡 **Próximamente:** Agrega capturas de pantalla de la interfaz aquí para dar una vista previa del proyecto.
-
----
-
 ## 📋 Requisitos del Sistema
 
 ### Requisitos Obligatorios
@@ -57,9 +52,3 @@ Las siguientes librerías se instalan automáticamente al ejecutar `start.bat`:
 > ⚠️ **Sin FFmpeg:** las descargas de video se limitan a un máximo de 720p y el audio se descargará en su formato original (`m4a`/`webm`) en lugar de MP3.
 
 ---
-
-## 🛠️ Antes de empezar: Verificar Python
-
-Abre una terminal (CMD o PowerShell) y ejecuta:
-```bash
-python --version
