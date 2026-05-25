@@ -1,7 +1,5 @@
 # ☁️ Downloader YT Fer32
 
-### 🚀Descargador de videos y audio de YouTube con interfaz web premium
-
 ### 🪄Instrucciones 
 
 
