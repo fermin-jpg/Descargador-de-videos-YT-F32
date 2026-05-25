@@ -8,18 +8,62 @@ echo.
 :: Navigate to script directory
 cd /d "%~dp0"
 
-:: Requirement Check: Check if Python is installed
-python --version >nul 2>&1
-if %errorlevel% neq 0 goto no_python
-goto python_ok
+:: ──────────────────────────────────────────────────────────
+:: Buscar Python de multiples formas
+:: ──────────────────────────────────────────────────────────
+set "PYTHON_CMD="
 
-:no_python
+:: Intento 1: comando "python"
+python --version >nul 2>&1
+if %errorlevel% equ 0 (
+    set "PYTHON_CMD=python"
+    goto python_found
+)
+
+:: Intento 2: comando "python3"
+python3 --version >nul 2>&1
+if %errorlevel% equ 0 (
+    set "PYTHON_CMD=python3"
+    goto python_found
+)
+
+:: Intento 3: Python Launcher "py" (se instala con Python en Windows)
+py --version >nul 2>&1
+if %errorlevel% equ 0 (
+    set "PYTHON_CMD=py"
+    goto python_found
+)
+
+:: Intento 4: Buscar en rutas comunes de instalacion
+for %%P in (
+    "%LocalAppData%\Programs\Python\Python314\python.exe"
+    "%LocalAppData%\Programs\Python\Python313\python.exe"
+    "%LocalAppData%\Programs\Python\Python312\python.exe"
+    "%LocalAppData%\Programs\Python\Python311\python.exe"
+    "%LocalAppData%\Programs\Python\Python310\python.exe"
+    "%LocalAppData%\Programs\Python\Python39\python.exe"
+    "%ProgramFiles%\Python314\python.exe"
+    "%ProgramFiles%\Python313\python.exe"
+    "%ProgramFiles%\Python312\python.exe"
+    "%ProgramFiles%\Python311\python.exe"
+    "%ProgramFiles%\Python310\python.exe"
+    "%ProgramFiles%\Python39\python.exe"
+) do (
+    if exist %%P (
+        set "PYTHON_CMD=%%~P"
+        goto python_found
+    )
+)
+
+:: No se encontro Python
 echo [ALERTA] Python no esta instalado o no se encuentra en el PATH.
 echo Se requiere Python 3.7 o superior para ejecutar Downloader YT Fer32.
 echo.
-set /p "install_py=¿Desea abrir la pagina oficial de descargas de Python en su navegador? (S/N): "
+echo Consejo: Si ya tienes Python instalado, asegurate de marcar la casilla
+echo "Add Python to PATH" durante la instalacion, o reinstala Python con esa opcion.
+echo.
+set /p "install_py=Desea abrir la pagina oficial de descargas de Python en su navegador? (S/N): "
 
-:: Open URL if user accepts
 if /i "%install_py%"=="s" start https://www.python.org/downloads/
 if /i "%install_py%"=="si" start https://www.python.org/downloads/
 
@@ -28,9 +72,14 @@ echo Por favor, instala Python y vuelve a ejecutar este archivo.
 pause
 exit /b 1
 
-:python_ok
+:python_found
+echo [OK] Python encontrado: %PYTHON_CMD%
+%PYTHON_CMD% --version
+echo.
 
-:: Check if Virtual Environment exists and is working
+:: ──────────────────────────────────────────────────────────
+:: Verificar entorno virtual
+:: ──────────────────────────────────────────────────────────
 if not exist ".venv" goto make_venv
 .venv\Scripts\python -c "import sys" >nul 2>&1
 if %errorlevel% equ 0 goto venv_ok
@@ -40,7 +89,7 @@ rmdir /s /q .venv
 
 :make_venv
 echo [INFO] Creando entorno virtual Python en .venv...
-python -m venv .venv
+%PYTHON_CMD% -m venv .venv
 if %errorlevel% neq 0 (
     echo [ERROR] Error al crear el entorno virtual.
     pause
@@ -63,7 +112,9 @@ if %errorlevel% neq 0 (
 echo [SUCCESS] Dependencias listas.
 echo.
 
-:: Check default launch mode in settings.txt
+:: ──────────────────────────────────────────────────────────
+:: Seleccionar modo de inicio
+:: ──────────────────────────────────────────────────────────
 set "LAUNCH_MODE=ask"
 if exist "settings.txt" (
     set /p LAUNCH_MODE=<settings.txt
