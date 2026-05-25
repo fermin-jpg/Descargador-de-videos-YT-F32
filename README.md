@@ -1,4 +1,4 @@
-# ☁️ Downloader YT Fer32
+# ☁️ Downloader YT F32
 
 Descarga videos y audio de YouTube en máxima calidad desde una interfaz moderna, elegante y fácil de usar. Todo en local, sin servicios de terceros.
 
