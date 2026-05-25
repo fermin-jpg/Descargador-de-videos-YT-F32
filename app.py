@@ -38,7 +38,7 @@ static_dir.mkdir(parents=True, exist_ok=True)
 app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
 parser = argparse.ArgumentParser(description="Downloader YT Fer32 Backend")
-parser.add_argument('--mode', choices=['browser', 'app'], default='browser')
+parser.add_argument('--mode', choices=['browser', 'app'], default='app')
 args = parser.parse_args()
 
 # ─── FFmpeg helpers ────────────────────────────────────────────────────────────
@@ -197,11 +197,11 @@ def index():
 
 @app.get("/api/settings")
 def get_settings():
-    mode = "ask"
+    mode = "app"
     if SETTINGS_FILE.exists():
         try:
             v = SETTINGS_FILE.read_text().strip()
-            if v in ("ask", "browser", "app"):
+            if v in ("browser", "app"):
                 mode = v
         except Exception:
             pass
@@ -209,7 +209,7 @@ def get_settings():
 
 @app.post("/api/settings")
 def save_settings(req: SettingsRequest):
-    if req.default_mode not in ("ask", "browser", "app"):
+    if req.default_mode not in ("browser", "app"):
         raise HTTPException(400, "Modo no válido")
     SETTINGS_FILE.write_text(req.default_mode)
     return {"success": True}

@@ -62,10 +62,13 @@ echo.
 echo Consejo: Si ya tienes Python instalado, asegurate de marcar la casilla
 echo "Add Python to PATH" durante la instalacion, o reinstala Python con esa opcion.
 echo.
+set "install_py="
 set /p "install_py=Desea abrir la pagina oficial de descargas de Python en su navegador? (S/N): "
 
-if /i "%install_py%"=="s" start https://www.python.org/downloads/
-if /i "%install_py%"=="si" start https://www.python.org/downloads/
+if /i "%install_py%"=="s" start "" "https://www.python.org/downloads/"
+if /i "%install_py%"=="si" start "" "https://www.python.org/downloads/"
+if /i "%install_py%"=="y" start "" "https://www.python.org/downloads/"
+if /i "%install_py%"=="yes" start "" "https://www.python.org/downloads/"
 
 echo.
 echo Por favor, instala Python y vuelve a ejecutar este archivo.
@@ -115,35 +118,14 @@ echo.
 :: ──────────────────────────────────────────────────────────
 :: Seleccionar modo de inicio
 :: ──────────────────────────────────────────────────────────
-set "LAUNCH_MODE=ask"
+set "LAUNCH_MODE=app"
 if exist "settings.txt" (
     set /p LAUNCH_MODE=<settings.txt
 )
 
-if "%LAUNCH_MODE%"=="app" (
-    echo [INFO] Modo de inicio predeterminado detectado: APP ^(Ventana nativa^)
-    goto run
-)
-if "%LAUNCH_MODE%"=="browser" (
-    echo [INFO] Modo de inicio predeterminado detectado: Navegador
-    goto run
-)
-
-:: Select Launch Mode if not configured or set to ask
-echo ========================================================
-echo             SELECCIONA EL MODO DE INICIO
-echo ========================================================
-echo 1 - Abrir en el navegador (Chrome, Edge, Firefox, etc.)
-echo 2 - Abrir en ventana de APP (Modo Aplicacion Independiente)
-echo ========================================================
-echo.
-set "mode_choice=1"
-set /p "mode_choice=Selecciona una opcion (1 o 2) [Por defecto 1]: "
-
-if "%mode_choice%"=="2" (
+:: Normalizar y validar LAUNCH_MODE
+if not "%LAUNCH_MODE%"=="app" if not "%LAUNCH_MODE%"=="browser" (
     set "LAUNCH_MODE=app"
-) else (
-    set "LAUNCH_MODE=browser"
 )
 
 :run
