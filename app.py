@@ -66,18 +66,7 @@ def download_ffmpeg():
 def check_requirements():
     if FFMPEG_EXE.exists() and FFPROBE_EXE.exists():
         return True
-    print("\n========================================================")
-    print("  REQUISITO RECOMENDADO: FFmpeg & FFprobe")
-    print("========================================================")
-    print("Para descargar en 1080p+, 2K, 4K y convertir a MP3 320k")
-    print("se necesitan FFmpeg y FFprobe.")
-    print("--------------------------------------------------------")
-    ans = input("¿Descargar e instalar automáticamente? (S/N) [S]: ").strip().lower()
-    if ans in ['', 's', 'si', 'y', 'yes']:
-        return download_ffmpeg()
-    print("\n[AVISO] Sin FFmpeg: máximo 720p, sin conversión a MP3.")
-    input("Presione ENTER para continuar...")
-    return False
+    return download_ffmpeg()
 
 # ─── Pydantic schemas ─────────────────────────────────────────────────────────
 class URLRequest(BaseModel):
