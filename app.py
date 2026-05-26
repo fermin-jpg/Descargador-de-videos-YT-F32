@@ -335,7 +335,7 @@ if __name__ == "__main__":
     if args.mode == 'app':
         print("[INFO] Iniciando en modo APP (Ventana nativa)...")
         threading.Thread(target=start_server, daemon=True).start()
-        webview.create_window("Downloader YT Fer32", "http://localhost:8000", width=740, height=900, resizable=True)
+        webview.create_window("Downloader YT Fer32 v1.0.0 - Creado por by Fer32", "http://localhost:8000", width=740, height=900, resizable=True)
         webview.start()
     else:
         threading.Timer(1.5, launch_browser).start()
