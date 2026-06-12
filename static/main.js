@@ -1,83 +1,83 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ── Core UI elements ─────────────────────────────────────────────────────
-    const urlInput        = document.getElementById('url-input');
-    const fetchBtn        = document.getElementById('fetch-btn');
-    const clearBtn        = document.getElementById('clear-btn');
-    const urlError        = document.getElementById('url-error');
-    const errorMessage    = document.getElementById('error-message');
+    const urlInput = document.getElementById('url-input');
+    const fetchBtn = document.getElementById('fetch-btn');
+    const clearBtn = document.getElementById('clear-btn');
+    const urlError = document.getElementById('url-error');
+    const errorMessage = document.getElementById('error-message');
 
-    const loadingSection  = document.getElementById('loading-section');
-    const infoSection     = document.getElementById('info-section');
+    const loadingSection = document.getElementById('loading-section');
+    const infoSection = document.getElementById('info-section');
     const progressSection = document.getElementById('progress-section');
 
     // Single video
-    const videoThumbnail        = document.getElementById('video-thumbnail');
-    const videoDuration         = document.getElementById('video-duration');
-    const videoTitle            = document.getElementById('video-title');
-    const videoUploader         = document.getElementById('video-uploader');
-    const qualitySelect         = document.getElementById('quality-select');
-    const downloadBtn           = document.getElementById('download-btn');
-    const progressStatusTitle   = document.getElementById('progress-status-title');
-    const progressPercentText   = document.getElementById('progress-percentage-text');
-    const progressBarFill       = document.getElementById('progress-bar-fill');
-    const statSpeed             = document.getElementById('stat-speed');
-    const statEta               = document.getElementById('stat-eta');
-    const progressSpinner       = document.getElementById('progress-spinner');
-    const progressSuccessIcon   = document.getElementById('progress-success-icon');
-    const progressFailedIcon    = document.getElementById('progress-failed-icon');
+    const videoThumbnail = document.getElementById('video-thumbnail');
+    const videoDuration = document.getElementById('video-duration');
+    const videoTitle = document.getElementById('video-title');
+    const videoUploader = document.getElementById('video-uploader');
+    const qualitySelect = document.getElementById('quality-select');
+    const downloadBtn = document.getElementById('download-btn');
+    const progressStatusTitle = document.getElementById('progress-status-title');
+    const progressPercentText = document.getElementById('progress-percentage-text');
+    const progressBarFill = document.getElementById('progress-bar-fill');
+    const statSpeed = document.getElementById('stat-speed');
+    const statEta = document.getElementById('stat-eta');
+    const progressSpinner = document.getElementById('progress-spinner');
+    const progressSuccessIcon = document.getElementById('progress-success-icon');
+    const progressFailedIcon = document.getElementById('progress-failed-icon');
     const successActionContainer = document.getElementById('success-action-container');
-    const successFilename       = document.getElementById('success-filename');
-    const openFolderBtnSuccess  = document.getElementById('open-folder-btn-success');
+    const successFilename = document.getElementById('success-filename');
+    const openFolderBtnSuccess = document.getElementById('open-folder-btn-success');
     const failedActionContainer = document.getElementById('failed-action-container');
-    const failedErrorMsg        = document.getElementById('failed-error-msg');
+    const failedErrorMsg = document.getElementById('failed-error-msg');
 
     // Playlist
-    const playlistSection       = document.getElementById('playlist-section');
-    const playlistTitleEl       = document.getElementById('playlist-title');
-    const playlistUploaderEl    = document.getElementById('playlist-uploader');
-    const playlistCountEl       = document.getElementById('playlist-count');
+    const playlistSection = document.getElementById('playlist-section');
+    const playlistTitleEl = document.getElementById('playlist-title');
+    const playlistUploaderEl = document.getElementById('playlist-uploader');
+    const playlistCountEl = document.getElementById('playlist-count');
     const playlistQualitySelect = document.getElementById('playlist-quality-select');
-    const playlistVideoList     = document.getElementById('playlist-video-list');
-    const selectAllBtn          = document.getElementById('select-all-btn');
-    const selectNoneBtn         = document.getElementById('select-none-btn');
-    const selectedCountLabel    = document.getElementById('selected-count-label');
-    const playlistDlBtn         = document.getElementById('playlist-download-btn');
-    const playlistDlBtnLabel    = document.getElementById('playlist-dl-btn-label');
+    const playlistVideoList = document.getElementById('playlist-video-list');
+    const selectAllBtn = document.getElementById('select-all-btn');
+    const selectNoneBtn = document.getElementById('select-none-btn');
+    const selectedCountLabel = document.getElementById('selected-count-label');
+    const playlistDlBtn = document.getElementById('playlist-download-btn');
+    const playlistDlBtnLabel = document.getElementById('playlist-dl-btn-label');
 
     // Batch progress
-    const batchProgressSection  = document.getElementById('batch-progress-section');
-    const batchOverallLabel     = document.getElementById('batch-overall-label');
-    const batchOverallBar       = document.getElementById('batch-overall-bar');
-    const batchItemsList        = document.getElementById('batch-items-list');
-    const batchDoneActions      = document.getElementById('batch-done-actions');
-    const batchOpenFolderBtn    = document.getElementById('batch-open-folder-btn');
+    const batchProgressSection = document.getElementById('batch-progress-section');
+    const batchOverallLabel = document.getElementById('batch-overall-label');
+    const batchOverallBar = document.getElementById('batch-overall-bar');
+    const batchItemsList = document.getElementById('batch-items-list');
+    const batchDoneActions = document.getElementById('batch-done-actions');
+    const batchOpenFolderBtn = document.getElementById('batch-open-folder-btn');
 
     // Settings
-    const settingsBtn       = document.getElementById('settings-btn');
-    const settingsModal     = document.getElementById('settings-modal');
-    const closeSettingsBtn  = document.getElementById('close-settings-btn');
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsModal = document.getElementById('settings-modal');
+    const closeSettingsBtn = document.getElementById('close-settings-btn');
     const defaultModeSelect = document.getElementById('default-mode-select');
-    const settingsStatus    = document.getElementById('settings-status');
+    const settingsStatus = document.getElementById('settings-status');
 
     // Footer
     const globalOpenFolderBtn = document.getElementById('global-open-folder-btn');
 
     // ── State ────────────────────────────────────────────────────────────────
-    let currentVideoUrl      = '';
-    let playlistVideos       = [];
-    let pollingInterval      = null;
+    let currentVideoUrl = '';
+    let playlistVideos = [];
+    let pollingInterval = null;
     let batchPollingInterval = null;
-    let statusTimeout        = null;
+    let statusTimeout = null;
 
     // ── Helper: reset all result panels ──────────────────────────────────────
     function resetUI() {
-        loadingSection.style.display     = 'none';
-        infoSection.style.display        = 'none';
-        progressSection.style.display    = 'none';
-        playlistSection.style.display    = 'none';
+        loadingSection.style.display = 'none';
+        infoSection.style.display = 'none';
+        progressSection.style.display = 'none';
+        playlistSection.style.display = 'none';
         batchProgressSection.style.display = 'none';
-        urlError.style.display           = 'none';
-        if (pollingInterval)      { clearInterval(pollingInterval);      pollingInterval = null; }
+        urlError.style.display = 'none';
+        if (pollingInterval) { clearInterval(pollingInterval); pollingInterval = null; }
         if (batchPollingInterval) { clearInterval(batchPollingInterval); batchPollingInterval = null; }
     }
 
@@ -103,17 +103,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── Fetch info (video OR playlist) ───────────────────────────────────────
     fetchBtn.addEventListener('click', async () => {
         const url = urlInput.value.trim();
-        if (!url) { showError('Por favor, introduce una URL de YouTube'); return; }
-        if (!url.includes('youtube.com') && !url.includes('youtu.be')) {
-            showError('Por favor, introduce una URL de YouTube válida'); return;
-        }
+        if (!url) { showError('sPor favor, introduce una URL válida'); return; }
 
         resetUI();
         loadingSection.style.display = 'block';
         fetchBtn.disabled = true;
 
         try {
-            const res  = await fetch('/api/info', {
+            const res = await fetch('/api/info', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url })
@@ -159,9 +156,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderPlaylist(data) {
         playlistVideos = data.videos;
 
-        playlistTitleEl.textContent    = data.playlist_title;
+        playlistTitleEl.textContent = data.playlist_title;
         playlistUploaderEl.textContent = data.playlist_uploader || '';
-        playlistCountEl.textContent    = `${data.count} videos`;
+        playlistCountEl.textContent = `${data.count} videos`;
 
         // Populate quality selector
         playlistQualitySelect.innerHTML = '';
@@ -224,8 +221,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateSelectionCount() {
-        const total    = playlistVideoList.querySelectorAll('.playlist-item').length;
-        const checked  = playlistVideoList.querySelectorAll('input[type="checkbox"]:checked').length;
+        const total = playlistVideoList.querySelectorAll('.playlist-item').length;
+        const checked = playlistVideoList.querySelectorAll('input[type="checkbox"]:checked').length;
         selectedCountLabel.textContent = `${checked} seleccionado${checked !== 1 ? 's' : ''}`;
         playlistDlBtnLabel.textContent = `Descargar seleccionados (${checked})`;
         playlistDlBtn.disabled = checked === 0;
@@ -279,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchBtn.disabled = true;
 
         try {
-            const res  = await fetch('/api/download', {
+            const res = await fetch('/api/download', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url: currentVideoUrl, quality_id: qualityId })
@@ -297,10 +294,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pollingInterval) clearInterval(pollingInterval);
         pollingInterval = setInterval(async () => {
             try {
-                const res  = await fetch(`/api/download/status/${id}`);
+                const res = await fetch(`/api/download/status/${id}`);
                 const data = await res.json();
                 applySingleStatus(data, id);
-            } catch (_) {}
+            } catch (_) { }
         }, 1000);
     }
 
@@ -308,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.status === 'starting') {
             progressStatusTitle.textContent = 'Iniciando...';
         } else if (data.status === 'downloading') {
-            progressStatusTitle.textContent = 'Descargando de YouTube...';
+            progressStatusTitle.textContent = 'Descargando...';
             progressPercentText.textContent = `${data.percent}%`;
             progressBarFill.style.width = `${data.percent}%`;
             statSpeed.textContent = data.speed;
@@ -347,14 +344,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function reenableSingle() {
-        downloadBtn.disabled  = false;
+        downloadBtn.disabled = false;
         qualitySelect.disabled = false;
-        fetchBtn.disabled     = false;
+        fetchBtn.disabled = false;
     }
 
     // ── Batch (playlist) download ────────────────────────────────────────────
     playlistDlBtn.addEventListener('click', async () => {
-        const qualityId  = playlistQualitySelect.value;
+        const qualityId = playlistQualitySelect.value;
         const checkedItems = [...playlistVideoList.querySelectorAll('.playlist-item')]
             .filter(item => item.querySelector('input').checked);
 
@@ -363,18 +360,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // Build request payload
         const items = checkedItems.map(item => {
             const idx = parseInt(item.dataset.index, 10);
-            const v   = playlistVideos[idx];
+            const v = playlistVideos[idx];
             return { url: v.url, quality_id: qualityId, title: v.title };
         });
 
         // Disable controls
         playlistDlBtn.disabled = true;
-        selectAllBtn.disabled  = true;
+        selectAllBtn.disabled = true;
         selectNoneBtn.disabled = true;
-        fetchBtn.disabled      = true;
+        fetchBtn.disabled = true;
 
         try {
-            const res  = await fetch('/api/download/batch', {
+            const res = await fetch('/api/download/batch', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ items })
@@ -387,24 +384,24 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             alert('Error al iniciar la descarga: ' + err.message);
             playlistDlBtn.disabled = false;
-            selectAllBtn.disabled  = false;
+            selectAllBtn.disabled = false;
             selectNoneBtn.disabled = false;
-            fetchBtn.disabled      = false;
+            fetchBtn.disabled = false;
         }
     });
 
     function renderBatchProgress(downloads) {
         batchProgressSection.style.display = 'block';
-        batchDoneActions.style.display     = 'none';
+        batchDoneActions.style.display = 'none';
         batchOverallBar.style.width = '0%';
         batchOverallLabel.textContent = `0 / ${downloads.length} completados`;
         batchItemsList.innerHTML = '';
 
         downloads.forEach(dl => {
             const el = document.createElement('div');
-            el.className  = 'batch-item';
-            el.id         = `bi-${dl.download_id}`;
-            el.innerHTML  = `
+            el.className = 'batch-item';
+            el.id = `bi-${dl.download_id}`;
+            el.innerHTML = `
                 <div class="batch-item-header">
                     <span class="batch-item-title" title="${escHtml(dl.title)}">${escHtml(dl.title)}</span>
                     <span class="batch-item-pct" id="bi-pct-${dl.download_id}">0%</span>
@@ -425,44 +422,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
         batchPollingInterval = setInterval(async () => {
             let completed = 0;
-            let allDone   = true;
+            let allDone = true;
 
             await Promise.all(downloads.map(async dl => {
                 const el = document.getElementById(`bi-${dl.download_id}`);
                 if (!el || el.dataset.done) { completed++; return; }
 
                 try {
-                    const res  = await fetch(`/api/download/status/${dl.download_id}`);
+                    const res = await fetch(`/api/download/status/${dl.download_id}`);
                     const data = await res.json();
 
-                    const pctEl    = document.getElementById(`bi-pct-${dl.download_id}`);
-                    const barEl    = document.getElementById(`bi-bar-${dl.download_id}`);
+                    const pctEl = document.getElementById(`bi-pct-${dl.download_id}`);
+                    const barEl = document.getElementById(`bi-bar-${dl.download_id}`);
                     const statusEl = document.getElementById(`bi-status-${dl.download_id}`);
 
                     if (data.status === 'downloading') {
-                        pctEl.textContent    = `${data.percent}%`;
-                        barEl.style.width    = `${data.percent}%`;
+                        pctEl.textContent = `${data.percent}%`;
+                        barEl.style.width = `${data.percent}%`;
                         statusEl.textContent = `${data.speed} · ${data.eta}`;
-                        statusEl.className   = 'batch-item-status';
+                        statusEl.className = 'batch-item-status';
                         allDone = false;
                     } else if (data.status === 'processing') {
-                        pctEl.textContent    = '100%';
-                        barEl.style.width    = '100%';
+                        pctEl.textContent = '100%';
+                        barEl.style.width = '100%';
                         statusEl.textContent = data.eta || 'Procesando...';
-                        statusEl.className   = 'batch-item-status';
+                        statusEl.className = 'batch-item-status';
                         allDone = false;
                     } else if (data.status === 'completed') {
-                        pctEl.textContent    = '100%';
-                        barEl.style.width    = '100%';
+                        pctEl.textContent = '100%';
+                        barEl.style.width = '100%';
                         statusEl.textContent = `✓ Completado · ${data.filename || ''}`;
-                        statusEl.className   = 'batch-item-status done';
-                        el.dataset.done      = '1';
+                        statusEl.className = 'batch-item-status done';
+                        el.dataset.done = '1';
                         completed++;
                     } else if (data.status === 'failed') {
-                        pctEl.textContent    = 'Error';
+                        pctEl.textContent = 'Error';
                         statusEl.textContent = `✗ ${data.error || 'Fallo desconocido'}`;
-                        statusEl.className   = 'batch-item-status error';
-                        el.dataset.done      = '1';
+                        statusEl.className = 'batch-item-status error';
+                        el.dataset.done = '1';
                         completed++;
                     } else {
                         allDone = false; // starting
@@ -472,17 +469,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Overall bar
             const pct = Math.round((completed / downloads.length) * 100);
-            batchOverallBar.style.width    = `${pct}%`;
-            batchOverallLabel.textContent  = `${completed} / ${downloads.length} completados`;
+            batchOverallBar.style.width = `${pct}%`;
+            batchOverallLabel.textContent = `${completed} / ${downloads.length} completados`;
 
             if (completed >= downloads.length) {
                 clearInterval(batchPollingInterval);
                 batchPollingInterval = null;
                 batchDoneActions.style.display = 'block';
                 // Re-enable controls
-                fetchBtn.disabled      = false;
+                fetchBtn.disabled = false;
                 playlistDlBtn.disabled = false;
-                selectAllBtn.disabled  = false;
+                selectAllBtn.disabled = false;
                 selectNoneBtn.disabled = false;
                 updateSelectionCount();
             }
@@ -492,25 +489,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── Open folder ──────────────────────────────────────────────────────────
     async function openFolder() {
         try {
-            const res  = await fetch('/api/open-folder', { method: 'POST' });
+            const res = await fetch('/api/open-folder', { method: 'POST' });
             const data = await res.json();
             if (!data.success) alert('No se pudo abrir la carpeta: ' + (data.error || ''));
         } catch (_) { alert('Error de conexión al abrir la carpeta.'); }
     }
 
-    globalOpenFolderBtn.addEventListener('click',   openFolder);
-    openFolderBtnSuccess.addEventListener('click',  openFolder);
-    batchOpenFolderBtn.addEventListener('click',    openFolder);
+    globalOpenFolderBtn.addEventListener('click', openFolder);
+    openFolderBtnSuccess.addEventListener('click', openFolder);
+    batchOpenFolderBtn.addEventListener('click', openFolder);
 
     // ── Settings modal ───────────────────────────────────────────────────────
     async function loadSettings() {
         try {
-            const res  = await fetch('/api/settings');
+            const res = await fetch('/api/settings');
             if (res.ok) {
                 const data = await res.json();
                 defaultModeSelect.value = data.default_mode;
             }
-        } catch (_) {}
+        } catch (_) { }
     }
 
     defaultModeSelect.addEventListener('change', async () => {
@@ -525,7 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (statusTimeout) clearTimeout(statusTimeout);
                 statusTimeout = setTimeout(() => { settingsStatus.style.display = 'none'; }, 3000);
             }
-        } catch (_) {}
+        } catch (_) { }
     });
 
     settingsBtn.addEventListener('click', () => {

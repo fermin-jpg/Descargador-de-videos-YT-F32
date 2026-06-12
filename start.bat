@@ -1,7 +1,7 @@
 @echo off
-title Downloader YT Fer32 Launcher
+title Downloader Pro Fer32 Launcher
 echo ========================================================
-echo               DOWNLOADER YT Fer32 LAUNCHER
+echo              DOWNLOADER PRO Fer32 LAUNCHER
 echo ========================================================
 echo.
 
@@ -57,7 +57,7 @@ for %%P in (
 
 :: No se encontro Python
 echo [ALERTA] Python no esta instalado o no se encuentra en el PATH.
-echo Se requiere Python 3.7 o superior para ejecutar Downloader YT Fer32.
+echo Se requiere Python 3.7 o superior para ejecutar Downloader Pro Fer32.
 echo.
 echo Consejo: Si ya tienes Python instalado, asegurate de marcar la casilla
 echo "Add Python to PATH" durante la instalacion, o reinstala Python con esa opcion.
@@ -130,7 +130,7 @@ if not "%LAUNCH_MODE%"=="app" if not "%LAUNCH_MODE%"=="browser" (
 
 :run
 echo.
-echo [INFO] Iniciando backend de Downloader YT Fer32 en modo %LAUNCH_MODE%...
+echo [INFO] Iniciando backend de Downloader Pro Fer32 en modo %LAUNCH_MODE%...
 .venv\Scripts\python app.py --mode %LAUNCH_MODE%
 
 pause

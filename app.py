@@ -158,8 +158,17 @@ def run_download_thread(download_id, url, quality_id, output_dir):
         else:
             height = int(quality_id.replace('p', ''))
             if FFMPEG_EXE.exists():
-                ydl_opts.update({'format': f'bestvideo[height<={height}]+bestaudio/best[height<={height}]/best',
-                                 'merge_output_format': 'mp4', 'outtmpl': os.path.join(output_dir, '%(title)s.%(ext)s')})
+                ydl_opts.update({
+                    'format': f'bestvideo[height<={height}][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<={height}]+bestaudio/best[height<={height}]/best',
+                    'merge_output_format': 'mp4',
+                    'outtmpl': os.path.join(output_dir, '%(title)s.%(ext)s'),
+                    'postprocessor_args': {
+                        'ffmpeg': [
+                            '-c:v', 'copy',
+                            '-c:a', 'aac'
+                        ]
+                    }
+                })
             else:
                 ydl_opts.update({'format': f'best[height<={height}][ext=mp4]/best[height<={height}]',
                                  'outtmpl': os.path.join(output_dir, '%(title)s.%(ext)s')})

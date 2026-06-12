@@ -232,10 +232,10 @@ header {
 .input-icon {
     position: absolute;
     left: 16px;
-    color: #ff0000; /* YouTube Red */
+    color: var(--accent-start);
     font-size: 1.2rem;
     opacity: 0.9;
-    filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.3));
+    filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.3));
 }
 
 #url-input {
